@@ -1,0 +1,11 @@
+[package]
+name = "kt-int"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license-file = "../../../LICENSE"
+description = "Zero-float integer op-kernels: fixed-point requantization + table-driven nonlinearities."
+
+# Dependency-free on purpose: the runtime kernels are pure integer std-only. Float appears ONLY in offline
+# calibration and in the tests (as the reference the integer path is checked against).
+[dependencies]

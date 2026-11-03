@@ -1,0 +1,15 @@
+[package]
+name = "kt-core"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license-file = "../../../LICENSE"
+description = "Generic exact-integer inference engine + the architecture-plugin contract for the converter."
+
+[dependencies]
+kt-int = { path = "../../00-kernels/kt-int" }
+sha2 = "0.10"
+
+[features]
+# planted architecture mistakes for the fidelity gate's firing controls (never on by default)
+plants = []

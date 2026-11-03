@@ -1,0 +1,10 @@
+[package]
+name = "kt-model-decoder"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license-file = "../../../LICENSE"
+description = "tritify architecture plugin: Llama/Qwen/Mistral-style decoder-only transformers."
+
+[dependencies]
+kt-core = { path = "../../01-engine/kt-core" }

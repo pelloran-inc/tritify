@@ -1,0 +1,11 @@
+[package]
+name = "kt-r16"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license-file = "../../../LICENSE"
+description = "Lossless balanced-ternary fixed-point container: exact-integer vector codes with a float-free dot."
+
+# Dependency-free: encode/decode and the exact dot are pure std integer code. Float appears only to compute
+# the per-vector scale (offline/ingest) and in the tests (as the reference the integer path is checked against).
+[dependencies]

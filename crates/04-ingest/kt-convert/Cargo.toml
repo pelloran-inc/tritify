@@ -1,0 +1,33 @@
+[package]
+name = "kt-convert"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license-file = "../../../LICENSE"
+description = "The converter driver: point it at a Hugging Face model, get a verified exact-integer model + hash."
+
+[dependencies]
+kt-core = { path = "../../01-engine/kt-core" }
+kt-model-decoder = { path = "../../03-models/kt-model-decoder" }
+kt-model-moe = { path = "../../03-models/kt-model-moe" }
+kt-model-vision = { path = "../../03-models/kt-model-vision" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Hugging Face's own tokenizer (reads the checkpoint's tokenizer.json), built pure-Rust: no onig, no esaxx C++
+tokenizers = { version = "0.22.2", default-features = false, features = ["fancy-regex"] }
+
+[dev-dependencies]
+# the per-backend anchor example installs each compute backend in turn (04 → 02, a downward edge)
+kt-runtime = { path = "../../02-runtime/kt-runtime", features = ["plants"] }
+# the GPU variants and the planted residency defects (example builds only)
+kt-gpu = { path = "../../02-runtime/kt-gpu", features = ["plants"] }
+# the digit backend's host executor and its planted defects (example builds only)
+kt-cuda = { path = "../../02-runtime/kt-cuda", features = ["plants"] }
+
+[[bin]]
+name = "tritify-convert"
+path = "src/main.rs"
+
+[features]
+# glm_slice --plant builds a planted architecture mistake (never on by default)
+plants = ["kt-model-moe/plants"]

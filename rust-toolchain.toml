@@ -1,0 +1,4 @@
+[toolchain]
+# The toolchain every hash in this repository was produced and checked with (CI pins the same: ci/gates.sh, ci.yml).
+channel = "1.90.0"
+components = ["clippy", "rustfmt"]

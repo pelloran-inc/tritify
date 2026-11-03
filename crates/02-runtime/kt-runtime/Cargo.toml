@@ -1,0 +1,29 @@
+[package]
+name = "kt-runtime"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license-file = "../../../LICENSE"
+description = "The automatic compute backend: detect the host, pick the fastest bit-identical kernel, install it into the engine."
+
+[dependencies]
+kt-core = { path = "../../01-engine/kt-core" }
+kt-gpu = { path = "../kt-gpu", optional = true }
+# the exact INT8 Tensor-Core backend; its CUDA part only with the `cuda` feature
+kt-cuda = { path = "../kt-cuda" }
+sha2 = "0.10"
+
+[dev-dependencies]
+# the planted GPU defects for their firing controls (test builds only)
+kt-gpu = { path = "../kt-gpu", features = ["plants"] }
+# the planted digit-backend defects for their firing controls (test builds only)
+kt-cuda = { path = "../kt-cuda", features = ["plants"] }
+
+[features]
+# the GPU backend (wgpu); `--no-default-features` gives a CPU-only runtime for small boards
+default = ["gpu"]
+gpu = ["dep:kt-gpu"]
+# the CUDA backend: compiles the kernel with nvcc; off by default, for hosts with an NVIDIA GPU
+cuda = ["kt-cuda/cuda"]
+# the planted CPU partitions for their firing controls (test and example builds only)
+plants = []

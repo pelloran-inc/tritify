@@ -1,0 +1,21 @@
+# The tritify workspace. The folder structure is the stack: a layer depends only on lower-numbered layers;
+# apps/ sits on top.
+[workspace]
+resolver = "2"
+members = [
+    "crates/00-kernels/kt-int",
+    "crates/00-kernels/kt-r16",
+    "crates/01-engine/kt-core",
+    "crates/02-runtime/kt-cuda",
+    "crates/02-runtime/kt-gpu",
+    "crates/02-runtime/kt-runtime",
+    "crates/03-models/kt-model-decoder",
+    "crates/03-models/kt-model-moe",
+    "crates/03-models/kt-model-vision",
+    "crates/04-ingest/kt-convert",
+    "crates/06-server/kt-server",
+    "apps/kt-demo",
+]
+
+[profile.release]
+opt-level = 3

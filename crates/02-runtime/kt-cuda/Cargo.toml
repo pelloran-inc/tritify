@@ -1,0 +1,17 @@
+[package]
+name = "kt-cuda"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license-file = "../../../LICENSE"
+description = "The exact INT8 Tensor-Core backend: base-81 digit planes, int8 × int8 → int32 products, an exact i64 recombination (CUDA, with a host executor of the same algorithm)."
+
+[dependencies]
+kt-core = { path = "../../01-engine/kt-core" }
+
+[features]
+# compile the CUDA kernel with nvcc and link the CUDA runtime; off by default, so hosts without CUDA build the
+# host part only
+cuda = []
+# planted defects for the firing controls; only test and example builds turn this on
+plants = []

@@ -1,0 +1,30 @@
+[package]
+name = "kt-server"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license-file = "../../../LICENSE"
+description = "The product server: an OpenAI-compatible API on the exact-integer engine; every answer carries a re-checkable SHA-256."
+
+[dependencies]
+kt-core = { path = "../../01-engine/kt-core" }
+kt-runtime = { path = "../../02-runtime/kt-runtime" }
+kt-convert = { path = "../../04-ingest/kt-convert" }
+axum = "0.8"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "sync", "fs", "time"] }
+tokio-stream = "0.1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+
+[dev-dependencies]
+# the tests' raw HTTP client
+tokio = { version = "1", features = ["io-util"] }
+
+[features]
+# serve on the exact INT8 Tensor-Core backend: `--features cuda`, on a host with nvcc and an NVIDIA GPU
+cuda = ["kt-runtime/cuda"]
+
+[[bin]]
+name = "kt-server"
+path = "src/main.rs"

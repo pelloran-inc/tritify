@@ -1,0 +1,15 @@
+[package]
+name = "kt-demo"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license-file = "../../LICENSE"
+description = "Deterministic, bit-identical, zero-float ternary matmul — clone it, run it, verify the hash."
+
+[[bin]]
+name = "demo"
+path = "src/main.rs"
+
+[dependencies]
+kt-gpu = { path = "../../crates/02-runtime/kt-gpu" }
+sha2 = "0.10"

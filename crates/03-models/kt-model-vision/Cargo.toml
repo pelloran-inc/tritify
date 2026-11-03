@@ -1,0 +1,15 @@
+[package]
+name = "kt-model-vision"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license-file = "../../../LICENSE"
+description = "tritify architecture plugin: SAM 2.1 (Hiera image encoder + FPN neck + prompt encoder + mask decoder), zero-float exact-integer inference."
+
+[dependencies]
+kt-core = { path = "../../01-engine/kt-core" }
+kt-int = { path = "../../00-kernels/kt-int" }
+serde_json = "1"
+
+[dev-dependencies]
+sha2 = "0.10"

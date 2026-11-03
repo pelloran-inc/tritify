@@ -1,0 +1,14 @@
+[package]
+name = "kt-model-moe"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license-file = "../../../LICENSE"
+description = "tritify architecture plugin: generic Mixture-of-Experts decoders (OLMoE / Mixtral / Qwen-MoE)."
+
+[dependencies]
+kt-core = { path = "../../01-engine/kt-core" }
+
+[features]
+# planted architecture mistakes for the fidelity gate's firing controls (never on by default)
+plants = ["kt-core/plants"]

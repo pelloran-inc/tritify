@@ -1,0 +1,1 @@
+# 02-runtime — the automatic compute backend, injected into the engine from above: `kt-runtime` detects the host and installs the fastest bit-identical backend; `kt-gpu` is the wgpu GPU backend; `kt-cuda` is the exact INT8 Tensor-Core backend (its CUDA part behind the `cuda` feature).

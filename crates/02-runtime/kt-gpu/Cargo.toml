@@ -1,0 +1,17 @@
+[package]
+name = "kt-gpu"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license-file = "../../../LICENSE"
+description = "The GPU compute backend: exact integer GEMM as portable WGSL compute shaders via wgpu (Metal / Vulkan / DX12)."
+
+[dependencies]
+kt-core = { path = "../../01-engine/kt-core" }
+wgpu = "24"
+bytemuck = { version = "1.18", features = ["derive"] }
+pollster = "0.4"
+
+[features]
+# planted defects for the firing controls; only test and example builds turn this on
+plants = []
