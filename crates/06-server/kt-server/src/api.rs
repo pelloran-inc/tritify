@@ -28,6 +28,15 @@ impl ApiError {
             code: Some("model_not_found"),
         }
     }
+    /// A request this server is configured to refuse (the runtime switch when it is off).
+    pub fn forbidden(message: impl Into<String>, code: &'static str) -> ApiError {
+        ApiError {
+            status: StatusCode::FORBIDDEN,
+            message: message.into(),
+            kind: "invalid_request_error",
+            code: Some(code),
+        }
+    }
     pub fn internal(message: impl Into<String>) -> ApiError {
         ApiError {
             status: StatusCode::INTERNAL_SERVER_ERROR,

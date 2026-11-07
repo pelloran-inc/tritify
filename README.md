@@ -195,9 +195,22 @@ cargo run --release -p kt-convert -- <path/to/checkpoint>
 cargo run --release -p kt-server -- --model <path/to/checkpoint>
 ```
 
-**The server has no authentication.** It binds `127.0.0.1` by default, and `POST /kt/v1/runtime`
-switches the compute backend for every client. Put an authenticating proxy in front of it before you
-bind it to any other address.
+### Serving / security
+
+- **The defaults:** `kt-server` binds the loopback address, `127.0.0.1:8080`, and has **no authentication**.
+  - As it is, it is for one machine.
+  - On any other `--listen` address it prints a warning.
+- **Before exposing it, put an authenticating reverse proxy in front of it.** For example nginx or Caddy, with
+  authentication and TLS, forwarding to the loopback port.
+- **The runtime switch is process-global, and off by default.**
+  - `POST /kt/v1/runtime` installs the compute backend and sets the thread cap for the whole process, so for every
+    client.
+  - A server answers it with **403** (`runtime_switch_disabled`) unless it was started with
+    `--allow-runtime-switch`.
+  - Enable it only where every client is trusted. Keep it off on any exposed server.
+  - A switch never changes an answer's bits: every backend gives the engine's integers. But it changes speed,
+    resources and availability for everyone.
+- `GET /kt/v1/runtime` only reads, and reports `switch_enabled`.
 
 Decoder-only LMs, Mixture-of-Experts decoders, and SAM 2.1 are supported out of the box.
 

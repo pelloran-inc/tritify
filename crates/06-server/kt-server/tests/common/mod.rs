@@ -75,10 +75,16 @@ pub fn tiny_model() -> ServerModel {
     ServerModel { id: "tiny".into(), model: DecoderModel::build(&w), tok }
 }
 
+/// A server with the default options (the runtime switch off).
 pub async fn start(model: ServerModel) -> SocketAddr {
+    start_with(model, kt_server::ServeOptions::default()).await
+}
+
+/// A server with the given options.
+pub async fn start_with(model: ServerModel, opts: kt_server::ServeOptions) -> SocketAddr {
     let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
     let addr = listener.local_addr().unwrap();
-    tokio::spawn(async move { axum::serve(listener, kt_server::router(model)).await.unwrap() });
+    tokio::spawn(async move { axum::serve(listener, kt_server::router_with(model, opts)).await.unwrap() });
     addr
 }
 

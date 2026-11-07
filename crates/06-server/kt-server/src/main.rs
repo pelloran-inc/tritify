@@ -1,9 +1,15 @@
 //! `kt-server (--model <dir> | --spec <spec.json>) [--listen 127.0.0.1:8080] [--backend auto|cpu|cpu:<variant>|gpu|gpu:<i>|cuda|cuda:<i>]
-//! [--threads N] [--telemetry FILE]`, or `kt-server --telemetry FILE [--listen …]` for the fleet stream alone.
+//! [--threads N] [--telemetry FILE] [--allow-runtime-switch]`, or `kt-server --telemetry FILE [--listen …]` for the
+//! fleet stream alone.
 //!
 //! Serve one model (a decoder or a MoE decoder) over the OpenAI-compatible API: a Hugging Face checkpoint directory,
-//! or any checkpoint through its model spec. It binds the loopback
-//! address by default; there is no authentication yet, so do not expose it beyond the machine.
+//! or any checkpoint through its model spec.
+//!
+//! **Serving / security:**
+//! - It binds the loopback address by default, and there is **no authentication**. Do not expose it beyond the
+//!   machine without an authenticating reverse proxy in front. On any other address it warns on stderr.
+//! - `--allow-runtime-switch` enables `POST /kt/v1/runtime`, which switches the **process-global** backend and thread
+//!   cap for every client. It is off by default, and a POST then answers 403. Keep it off on an exposed server.
 
 fn arg(a: &[String], k: &str) -> Option<String> {
     a.iter().position(|x| x == k).and_then(|i| a.get(i + 1)).cloned()
@@ -16,7 +22,8 @@ async fn main() {
     if (dir.is_some() && spec.is_some()) || (dir.is_none() && spec.is_none() && telemetry.is_none()) {
         eprintln!(
             "usage: kt-server (--model <dir> | --spec <spec.json>) [--listen 127.0.0.1:8080] \
-             [--backend auto|cpu|cpu:<variant>|gpu|gpu:<i>|cuda|cuda:<i>] [--threads N] [--telemetry FILE]\n\
+             [--backend auto|cpu|cpu:<variant>|gpu|gpu:<i>|cuda|cuda:<i>] [--threads N] [--telemetry FILE] \
+             [--allow-runtime-switch]\n\
              \x20      kt-server --telemetry FILE [--listen 127.0.0.1:8080]"
         );
         std::process::exit(2);
@@ -39,7 +46,8 @@ async fn main() {
     }
     .map(|m| m.unwrap_or_else(|e| fail(e)));
     let runtime = kt_runtime::RuntimeConfig { backend, max_threads, ..Default::default() };
-    if let Err(e) = kt_server::serve_with(model, telemetry.map(Into::into), listen, &runtime).await {
+    let opts = kt_server::ServeOptions { allow_runtime_switch: a.iter().any(|x| x == "--allow-runtime-switch") };
+    if let Err(e) = kt_server::serve_with(model, telemetry.map(Into::into), listen, &runtime, opts).await {
         fail(e);
     }
 }

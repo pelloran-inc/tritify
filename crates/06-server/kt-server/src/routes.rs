@@ -428,7 +428,7 @@ fn body_hash(body: &[u8]) -> String {
     api::parse::<VerifyRequest>(body).map(|r| r.hash).unwrap_or_default()
 }
 
-fn runtime_view() -> Value {
+fn runtime_view(st: &AppState) -> Value {
     let host = kt_runtime::detect();
     let gpus: Vec<Value> = host
         .gpus
@@ -443,15 +443,25 @@ fn runtime_view() -> Value {
         "auto": kt_runtime::auto_variant(&host).name(),
         "backend": kt_core::backend::backend().name(),
         "max_threads": kt_core::max_threads(),
+        "switch_enabled": st.opts.allow_runtime_switch,
     })
 }
 
-async fn runtime_get() -> Json<Value> {
-    Json(runtime_view())
+async fn runtime_get(State(st): State<Shared>) -> Json<Value> {
+    Json(runtime_view(&st))
 }
 
-/// Switch the backend and/or the thread cap (between requests: it waits for the engine lock).
+/// The refusal of a runtime switch on a server that has it off.
+const SWITCH_OFF: &str = "the runtime switch is disabled on this server: POST /kt/v1/runtime changes the \
+     process-global backend and thread cap for every client. Start kt-server with --allow-runtime-switch to enable \
+     it, only where every client is trusted (loopback, or behind an authenticating proxy).";
+
+/// Switch the backend and/or the thread cap (between requests: it waits for the engine lock). Refused with 403, before
+/// the body is read, unless the server was started with the switch on.
 async fn runtime_post(State(st): State<Shared>, body: Bytes) -> Response {
+    if !st.opts.allow_runtime_switch {
+        return ApiError::forbidden(SWITCH_OFF, "runtime_switch_disabled").into_response();
+    }
     let req = match api::parse::<RuntimeRequest>(&body) {
         Ok(r) => r,
         Err(e) => return e.into_response(),
@@ -465,14 +475,14 @@ async fn runtime_post(State(st): State<Shared>, body: Bytes) -> Response {
                 ..Default::default()
             };
             let sel = kt_runtime::install(&cfg).map_err(ApiError::bad)?;
-            let mut v = runtime_view();
+            let mut v = runtime_view(&st);
             v["reason"] = json!(sel.reason);
             Ok(v)
         } else {
             if let Some(n) = req.max_threads {
                 kt_core::set_max_threads(n);
             }
-            Ok(runtime_view())
+            Ok(runtime_view(&st))
         }
     })
     .await;

@@ -2,7 +2,7 @@
 //! run in order, because the compute backend is process-wide and one step switches it.
 
 mod common;
-use common::{http, start, tiny_model};
+use common::{http, start_with, tiny_model};
 use serde_json::{json, Value};
 
 const CHAT: &str = r#"{"model": "tiny", "messages": [{"role": "user", "content": "hello"}], "max_tokens": 12}"#;
@@ -21,7 +21,8 @@ fn content_of_stream(events: &[String]) -> (String, Value) {
 
 #[tokio::test]
 async fn the_api_answers_like_openai_and_every_answer_carries_its_hash() {
-    let addr = start(tiny_model()).await;
+    // the runtime step below switches the backend, so this server runs with the switch on
+    let addr = start_with(tiny_model(), kt_server::ServeOptions { allow_runtime_switch: true }).await;
 
     // models
     let r = http(addr, "GET", "/v1/models", None).await;
@@ -132,6 +133,7 @@ async fn the_api_answers_like_openai_and_every_answer_carries_its_hash() {
     // runtime: report, switch, refuse what the host lacks; the hash does not move
     let rt = http(addr, "GET", "/kt/v1/runtime", None).await.json();
     assert_eq!(rt["host"]["arch"], std::env::consts::ARCH);
+    assert_eq!(rt["switch_enabled"], true);
     let set = http(addr, "POST", "/kt/v1/runtime", Some(r#"{"backend": "cpu:portable", "max_threads": 1}"#)).await;
     assert_eq!(
         (set.status, set.json()["backend"].as_str(), set.json()["max_threads"].as_u64()),
