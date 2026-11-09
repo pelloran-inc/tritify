@@ -103,8 +103,8 @@ difference ends it with `VERDICT: MISMATCH` and exit code 1.
 d0f296c46277f1d078562135fe80847feb8497e33cc05be13fee1466d73e5c65
 ```
 
-[`REPRODUCE.md`](REPRODUCE.md) lists every hash this README and the whitepaper cite, in full, with its
-model, revision and command.
+[`REPRODUCE.md`](REPRODUCE.md) lists every hash this README and the
+[whitepaper](https://doi.org/10.5281/zenodo.23986737) cite, in full, with its model, revision and command.
 
 ### Check it position by position, against our reference, and on your own input
 
@@ -244,6 +244,30 @@ cargo run --release -p kt-server -- --model <path/to/checkpoint>
 - `GET /kt/v1/runtime` only reads, and reports `switch_enabled`.
 
 Decoder-only LMs, Mixture-of-Experts decoders, and SAM 2.1 are supported out of the box.
+
+## Citation
+
+If you use tritify, please cite the preprint:
+
+> Sayed Amir Karim. *Deterministic, Reproducible Inference in Exact Integer Arithmetic, and Verifiable Distributed
+> Inference as Its Consequence.* Preprint, Zenodo, 2026.
+> [doi:10.5281/zenodo.23986737](https://doi.org/10.5281/zenodo.23986737)
+
+```bibtex
+@misc{karim2026tritify,
+  author    = {Karim, Sayed Amir},
+  title     = {Deterministic, Reproducible Inference in Exact Integer Arithmetic, and Verifiable Distributed
+               Inference as Its Consequence},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23986737},
+  url       = {https://doi.org/10.5281/zenodo.23986737},
+  note      = {Preprint}
+}
+```
+
+GitHub's "Cite this repository" button gives the same reference, from [`CITATION.cff`](CITATION.cff). Each
+release's changes are listed in [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Scope
 

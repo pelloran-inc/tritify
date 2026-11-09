@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use tritify, please cite the preprint below."
+type: software
+title: tritify
+abstract: "An exact-integer, deterministic inference engine for language models and Segment Anything 2.1."
+authors:
+  - family-names: Karim
+    given-names: Sayed Amir
+    affiliation: Pelloran Inc.
+version: 0.0.2
+date-released: 2026-11-09
+license: Apache-2.0
+repository-code: "https://github.com/pelloran-inc/tritify"
+keywords:
+  - deterministic inference
+  - reproducibility
+  - integer arithmetic
+preferred-citation:
+  type: article
+  status: preprint
+  title: "Deterministic, Reproducible Inference in Exact Integer Arithmetic, and Verifiable Distributed Inference as Its Consequence"
+  authors:
+    - family-names: Karim
+      given-names: Sayed Amir
+      affiliation: Pelloran Inc.
+  year: 2026
+  date-published: 2026-11-05
+  publisher:
+    name: Zenodo
+  doi: 10.5281/zenodo.23986737
+  url: "https://doi.org/10.5281/zenodo.23986737"

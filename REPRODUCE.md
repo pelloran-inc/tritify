@@ -1,7 +1,8 @@
 # Reproduce
 
-This file lists every hash that this repository's README and the tritify whitepaper cite. For each one it gives the
-full SHA-256, the model and its pinned revision, and the command that prints it. Run the commands from the repository
+This file lists every hash that this repository's README and the tritify whitepaper
+([doi:10.5281/zenodo.23986737](https://doi.org/10.5281/zenodo.23986737)) cite. For each one it gives the full SHA-256,
+the model and its pinned revision, and the command that prints it. Run the commands from the repository
 root. `rust-toolchain.toml` pins Rust 1.90.0.
 
 Where a command runs every compute backend your host has, every line it prints must carry the same digest. The times
