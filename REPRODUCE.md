@@ -13,6 +13,7 @@ are for one Apple M3 Max, after the first build.
 |---|---|---|---|
 | `de67ba75…` | `de67ba758bd0d1fb574fa64d7ff326e9d17f536d7725659228bebddcc6478bfa` | A ternary GEMM, 64 × 768 × 768, on the GPU against the CPU | `cargo run --release -p kt-demo` |
 | `781285bb…` | `781285bb99bcd9cb5233f708466676db41e717b6971ce70508b57ed291478352` | The backend probe's fixed corpus, on every CPU variant and GPU | `cargo run --release -p kt-runtime --example runtime_probe` |
+| `8109ebad…` | `8109ebad0a2883838a9d133351ce421f676e8d66dbcaffc5cde000272b748d03` | A small seeded decoder, 32 greedy tokens, every position on every backend | `cargo run --release -p kt-convert --example verify_repro -- --synthetic` |
 
 ## Public checkpoints, pinned
 
@@ -31,6 +32,7 @@ The README shows the same download with `curl`.
 | Hash | Full SHA-256 | What it is | Command (`<qwen>`, `<olmoe>`, `<sam>`: the directories) | Time |
 |---|---|---|---|---|
 | `d0f296c4…` | `d0f296c46277f1d078562135fe80847feb8497e33cc05be13fee1466d73e5c65` | Qwen: one fixed chat request, the logits hash, on every backend | `cargo run --release -p kt-convert --example generate_backends -- <qwen> 32` | 18 s |
+| `d0f296c4…` | the same | The same request, every position's logits on every backend, against the shipped reference (written on ARM, checked on x86) | `cargo run --release -p kt-convert --example verify_repro -- <qwen> --check crates/04-ingest/kt-convert/references/qwen2.5-0.5b-instruct.repro.json` | 15 s |
 | `98166930…` | `98166930a8af7026667db5d4ada8d3aae05527f4a25949c8dc27bbb26346558d` | The same command's fixed embedding input, its hash | the same command | — |
 | `6c139feb…` | `6c139feb57ed595215cf1b1ef72f760d89789a5041efd946de0f550d6f891d4b` | Qwen end to end over 512 tokens: one thread and many give the same bytes | `cargo run --release -p kt-convert --example verify_lm_e2e -- <qwen> 512` | 5 min |
 | `69b33985…` | `69b33985232a40d733cce739e78e61834c68726785d0edefde8a7520f1d8e334` | Qwen, converted and checked against its float reference | `cargo run --release -p kt-convert -- <qwen>` | 17 s |

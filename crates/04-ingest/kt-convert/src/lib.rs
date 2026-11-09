@@ -33,6 +33,7 @@
 pub mod checkpoint;
 pub mod hf;
 pub mod lazy;
+pub mod repro;
 pub mod spec;
 pub mod text;
 

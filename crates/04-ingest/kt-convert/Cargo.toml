@@ -13,6 +13,8 @@ kt-model-moe = { path = "../../03-models/kt-model-moe" }
 kt-model-vision = { path = "../../03-models/kt-model-vision" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+# the reproducibility verifier's per-position logits hashes and checkpoint identity (`repro`)
+sha2 = "0.10"
 # Hugging Face's own tokenizer (reads the checkpoint's tokenizer.json), built pure-Rust: no onig, no esaxx C++
 tokenizers = { version = "0.22.2", default-features = false, features = ["fancy-regex"] }
 

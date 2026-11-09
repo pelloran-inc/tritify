@@ -819,6 +819,7 @@ dependencies = [
  "kt-runtime",
  "serde",
  "serde_json",
+ "sha2",
  "tokenizers",
 ]
 

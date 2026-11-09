@@ -106,6 +106,37 @@ d0f296c46277f1d078562135fe80847feb8497e33cc05be13fee1466d73e5c65
 [`REPRODUCE.md`](REPRODUCE.md) lists every hash this README and the whitepaper cite, in full, with its
 model, revision and command.
 
+### Check it position by position, against our reference, and on your own input
+
+`verify_repro` runs the same request on every backend your machine has. It compares the logits at **every
+position**, and names the first position where anything differs. It also checks your run against a reference
+written on another machine:
+
+```sh
+# every backend here, position by position, and against the reference shipped with the code
+# (written on an ARM Mac, checked on x86)
+cargo run --release -p kt-convert --example verify_repro -- qwen \
+  --check crates/04-ingest/kt-convert/references/qwen2.5-0.5b-instruct.repro.json
+
+# your own text: write a reference on one machine, check it on another
+cargo run --release -p kt-convert --example verify_repro -- qwen --prompt my.txt --reference-out my.repro.json
+cargo run --release -p kt-convert --example verify_repro -- qwen --prompt my.txt --check my.repro.json
+
+# no download: a small seeded model
+cargo run --release -p kt-convert --example verify_repro -- --synthetic
+```
+
+- **What is compared:** each position's logits, as a SHA-256 over their integer scale and every integer code.
+- **What a reference is bound to:** the checkpoint's files and the input's tokens. A reference for another checkpoint
+  or another input is refused (exit 2). A difference ends with `VERDICT: MISMATCH` and exit 1.
+- **What was measured with it:** on Qwen2.5-0.5B-Instruct (the revision above) every backend gave the same logits at
+  every position:
+  - on an Apple M3 Max: the portable CPU path, NEON, and the whole model on the GPU (Metal)
+  - on an AMD EPYC: the portable CPU path, AVX2 and AVX-512
+  - every run equal to the shipped reference, with the logits hash above
+- **Two flags check the checker:** `--perturb POS` flips one bit at position POS, and it must be reported there.
+  `--plant` adds deliberately wrong CPU partitions, which must be found.
+
 ## What we claim — and what you can check
 
 Three precise claims, each verified; none conflated.
