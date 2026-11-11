@@ -9,6 +9,8 @@
   <img src="https://img.shields.io/badge/rust-1.90.0%20(pinned)-orange.svg" alt="Rust 1.90.0, pinned">
   <img src="https://img.shields.io/badge/integer%20path-bit--identical-brightgreen.svg" alt="Integer path: bit-identical">
   <img src="https://img.shields.io/badge/vs%20float-within%20tolerance-blue.svg" alt="Against float: within a declared tolerance">
+  <a href="https://arxiv.org/abs/2611.13730"><img src="https://img.shields.io/badge/arXiv-2611.13730-b31b1b.svg" alt="arXiv:2611.13730"></a>
+  <a href="https://doi.org/10.5281/zenodo.23986737"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.23986737.svg" alt="DOI 10.5281/zenodo.23986737"></a>
 </p>
 
 **Clone it, run it, verify the hash.**
@@ -104,7 +106,7 @@ d0f296c46277f1d078562135fe80847feb8497e33cc05be13fee1466d73e5c65
 ```
 
 [`REPRODUCE.md`](REPRODUCE.md) lists every hash this README and the
-[whitepaper](https://doi.org/10.5281/zenodo.23986737) cite, in full, with its model, revision and command.
+[whitepaper](https://arxiv.org/abs/2611.13730) cite, in full, with its model, revision and command.
 
 ### Check it position by position, against our reference, and on your own input
 
@@ -250,19 +252,22 @@ Decoder-only LMs, Mixture-of-Experts decoders, and SAM 2.1 are supported out of 
 If you use tritify, please cite the preprint:
 
 > Sayed Amir Karim. *Deterministic, Reproducible Inference in Exact Integer Arithmetic, and Verifiable Distributed
-> Inference as Its Consequence.* Preprint, Zenodo, 2026.
+> Inference as Its Consequence.* Preprint, 2026. [arXiv:2611.13730](https://arxiv.org/abs/2611.13730) [cs.LG],
+> [doi:10.48550/arXiv.2611.13730](https://doi.org/10.48550/arXiv.2611.13730); also on Zenodo,
 > [doi:10.5281/zenodo.23986737](https://doi.org/10.5281/zenodo.23986737)
 
 ```bibtex
 @misc{karim2026tritify,
-  author    = {Karim, Sayed Amir},
-  title     = {Deterministic, Reproducible Inference in Exact Integer Arithmetic, and Verifiable Distributed
-               Inference as Its Consequence},
-  year      = {2026},
-  publisher = {Zenodo},
-  doi       = {10.5281/zenodo.23986737},
-  url       = {https://doi.org/10.5281/zenodo.23986737},
-  note      = {Preprint}
+  author        = {Karim, Sayed Amir},
+  title         = {Deterministic, Reproducible Inference in Exact Integer Arithmetic, and Verifiable Distributed
+                   Inference as Its Consequence},
+  year          = {2026},
+  eprint        = {2611.13730},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  doi           = {10.48550/arXiv.2611.13730},
+  url           = {https://arxiv.org/abs/2611.13730},
+  note          = {Preprint; also on Zenodo, doi:10.5281/zenodo.23986737}
 }
 ```
 

@@ -1,7 +1,7 @@
 # Reproduce
 
 This file lists every hash that this repository's README and the tritify whitepaper
-([doi:10.5281/zenodo.23986737](https://doi.org/10.5281/zenodo.23986737)) cite. For each one it gives the full SHA-256,
+([arXiv:2611.13730](https://arxiv.org/abs/2611.13730), [doi:10.48550/arXiv.2611.13730](https://doi.org/10.48550/arXiv.2611.13730), [doi:10.5281/zenodo.23986737](https://doi.org/10.5281/zenodo.23986737)) cite. For each one it gives the full SHA-256,
 the model and its pinned revision, and the command that prints it. Run the commands from the repository
 root. `rust-toolchain.toml` pins Rust 1.90.0.
 

@@ -7,6 +7,13 @@ made: [RELEASING.md](RELEASING.md).
 
 ## [Unreleased]
 
+### Changed
+
+- **The citation gives the preprint on arXiv:** [arXiv:2611.13730](https://arxiv.org/abs/2611.13730) (cs.LG),
+  doi:10.48550/arXiv.2611.13730, beside its Zenodo DOI.
+  - The change is in the README (badges and the Citation section), `CITATION.cff` and `REPRODUCE.md`.
+  - The BibTeX entry now carries the arXiv DOI. Its key `karim2026tritify` is unchanged.
+
 ## [0.0.2] - 2026-11-09
 
 ### Added

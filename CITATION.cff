@@ -25,7 +25,15 @@ preferred-citation:
       affiliation: Pelloran Inc.
   year: 2026
   date-published: 2026-11-05
-  publisher:
-    name: Zenodo
-  doi: 10.5281/zenodo.23986737
-  url: "https://doi.org/10.5281/zenodo.23986737"
+  doi: 10.48550/arXiv.2611.13730
+  url: "https://arxiv.org/abs/2611.13730"
+  identifiers:
+    - type: other
+      value: "arXiv:2611.13730"
+      description: "The preprint on arXiv (cs.LG)"
+    - type: doi
+      value: 10.48550/arXiv.2611.13730
+      description: "The preprint on arXiv"
+    - type: doi
+      value: 10.5281/zenodo.23986737
+      description: "The preprint on Zenodo"
